@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LevelX - Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="hero-banner"></div>
+    <header>
+      <div class="logo">LevelX Admin</div>
+      <nav class="nav-links">
+        <a href="index.html">Customer Portal</a>
+        <a href="admin.html" style="color: var(--primary)">Admin Dashboard</a>
+      </nav>
+    </header>
+
+    <!-- Active & Upcoming Sessions (Priority 1) -->
+    <div class="glass-card" style="margin-bottom: 2rem;">
+      <h2 style="margin-bottom: 1rem;">Active & Upcoming Sessions</h2>
+      <div class="table-responsive">
+        <table id="sessions-table">
+          <thead>
+            <tr>
+              <th>In Date</th>
+              <th>Out Date</th>
+              <th>Client</th>
+              <th>Resource</th>
+              <th>In Time</th>
+              <th>Out Time</th>
+              <th>Duration</th>
+              <th>Unit Price</th>
+              <th>Amount</th>
+              <th>Payment</th>
+              <th>Time Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="sessions-tbody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Resource Availability & Manual Booking -->
+    <div class="dashboard-grid" style="margin-bottom: 2rem;">
+      <div class="glass-card" style="grid-column: span 1;">
+        <h2 style="margin-bottom: 1rem;">Resource Availability</h2>
+        <ul class="resource-list" id="admin-resource-list">
+          <!-- Filled by JS -->
+        </ul>
+      </div>
+
+      <div class="glass-card">
+        <h2 style="margin-bottom: 1rem;">Manual System Booking</h2>
+        <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Add a walk-in, call, or WhatsApp
+          booking.</p>
+        <form id="admin-booking-form">
+          <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 150px;">
+              <label>Customer Name</label>
+              <input type="text" id="admin-cust-name" required placeholder="Name">
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+              <label>Contact Number (Optional)</label>
+              <input type="tel" id="admin-cust-phone" placeholder="771234567">
+            </div>
+          </div>
+
+          <div id="admin-booking-items-container">
+            <div class="admin-booking-item"
+              style="border: 1px solid rgba(255,255,255,0.1); padding: 1rem; margin-bottom: 1rem; border-radius: 8px;">
+              <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 150px;">
+                  <label>Resource</label>
+                  <select class="admin-resource" required></select>
+                </div>
+              </div>
+              <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 120px;">
+                  <label>In Date</label>
+                  <input type="date" class="admin-in-date">
+                </div>
+                <div style="flex: 1; min-width: 120px;">
+                  <label>In Time</label>
+                  <input type="time" class="admin-in">
+                </div>
+                <div style="flex: 1; min-width: 120px;">
+                  <label>Out Date</label>
+                  <input type="date" class="admin-out-date">
+                </div>
+                <div style="flex: 1; min-width: 120px;">
+                  <label>Out Time</label>
+                  <input type="time" class="admin-out">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" id="admin-add-resource-btn" class="btn"
+            style="background: transparent; border: 1px solid var(--primary); color: var(--text-main); margin-bottom: 1rem; width: 100%;">+
+            Add Another Booking</button>
+
+          <button type="submit" class="btn" style="width: 100%;">Create Booking(s)</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Store Settings -->
+    <div class="dashboard-grid" style="margin-bottom: 2rem; grid-template-columns: 1fr;">
+      <div class="glass-card">
+        <h2 style="margin-bottom: 1rem;">Store Settings</h2>
+        <form id="settings-form">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="form-group" style="flex:1; min-width:120px;">
+              <label>Open Time</label>
+              <input type="time" id="set-open" required>
+            </div>
+            <div class="form-group" style="flex:1; min-width:120px;">
+              <label>Close Time</label>
+              <input type="time" id="set-close" required>
+            </div>
+            <div class="form-group" style="flex:1; min-width:120px;">
+              <label>Shop Status</label>
+              <select id="set-status" required>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+          </div>
+
+          <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Pricing</h3>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label>Select Time Category</label>
+            <select id="set-price-category">
+              <option value="11_to_3">11.00AM to 3.00PM</option>
+              <option value="after_3">After 3.00PM</option>
+              <option value="full_day">Full Day</option>
+            </select>
+          </div>
+
+          <div id="price-inputs-container" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap:wrap;">
+            <!-- Rendered by JS based on select -->
+          </div>
+
+          <h3 style="margin-bottom: 0.5rem; font-size: 1rem; margin-top: 1.5rem;">Resource Maintenance</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Select resources to mark them as
+            'Under Repair'.</p>
+          <div id="repair-resources-container"
+            style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+            <!-- JS fills checkboxes here -->
+          </div>
+
+          <button type="submit" class="btn">Save Settings</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- History Sessions -->
+    <div class="glass-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="margin-bottom: 1rem;">Session History</h2>
+        <button id="export-btn" class="btn">Export CSV</button>
+      </div>
+
+      <div class="history-filters"
+        style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem; background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+        <div style="flex:1; min-width:130px;">
+          <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.2rem; display:block;">From
+            Date</label>
+          <input type="date" id="filter-from-date"
+            style="width:100%; border:1px solid rgba(255,255,255,0.1); padding:0.4rem; background:rgba(0,0,0,0.3); color:#fff; border-radius:4px;">
+        </div>
+        <div style="flex:1; min-width:130px;">
+          <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.2rem; display:block;">To
+            Date</label>
+          <input type="date" id="filter-to-date"
+            style="width:100%; border:1px solid rgba(255,255,255,0.1); padding:0.4rem; background:rgba(0,0,0,0.3); color:#fff; border-radius:4px;">
+        </div>
+        <div style="flex:1; min-width:120px;">
+          <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.2rem; display:block;">From
+            Time</label>
+          <input type="time" id="filter-from-time"
+            style="width:100%; border:1px solid rgba(255,255,255,0.1); padding:0.4rem; background:rgba(0,0,0,0.3); color:#fff; border-radius:4px;">
+        </div>
+        <div style="flex:1; min-width:120px;">
+          <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.2rem; display:block;">To
+            Time</label>
+          <input type="time" id="filter-to-time"
+            style="width:100%; border:1px solid rgba(255,255,255,0.1); padding:0.4rem; background:rgba(0,0,0,0.3); color:#fff; border-radius:4px;">
+        </div>
+        <div style="flex:1; min-width:160px;">
+          <label
+            style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.2rem; display:block;">Resource</label>
+          <select id="filter-resource"
+            style="width:100%; border:1px solid rgba(255,255,255,0.1); padding:0.4rem; background:var(--bg-dark); color:#fff; border-radius:4px;">
+            <option value="">All Resources</option>
+            <!-- JS fills this -->
+          </select>
+        </div>
+        <div style="display:flex; align-items:flex-end;">
+          <button id="apply-filters-btn" class="btn" style="padding: 0.4rem 1rem;">Filter Data</button>
+          <button id="clear-filters-btn" class="btn"
+            style="padding: 0.4rem 1rem; margin-left:0.5rem; background:rgba(255,255,255,0.1); color:#fff; border:none;">Clear</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>In Date</th>
+              <th>Out Date</th>
+              <th>Client</th>
+              <th>Resource</th>
+              <th>In Time</th>
+              <th>Out Time</th>
+              <th>Duration</th>
+              <th>Unit Price</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- Rendered via JS -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="8" style="text-align: right;">Finished Sessions Revenue:</th>
+              <th colspan="2" id="history-total" style="color: var(--text); font-size:1rem;">0.00</th>
+            </tr>
+            <tr>
+              <th colspan="8" style="text-align: right; color: var(--primary)">Active Advance Prepaid Revenue:</th>
+              <th colspan="2" id="active-prepaid-total" style="color: var(--primary); font-size:1rem;">0.00</th>
+            </tr>
+            <tr style="border-top: 1px solid var(--border)">
+              <th colspan="8" style="text-align: right; font-size:1.1rem; padding-top: 1rem;">Total Expected Cash
+                Generation:</th>
+              <th colspan="2" id="grand-total"
+                style="color: var(--success); font-size:1.2rem; font-weight:800; padding-top: 1rem;">0.00</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script src="shared.js"></script>
+  <script src="admin.js"></script>
+</body>
+
+</html>

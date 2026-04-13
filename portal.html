@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LevelX - Gaming Center</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="hero-banner"></div>
+    <header>
+      <div class="logo">LevelX</div>
+      
+      <div class="hours-display" id="store-hours">
+        Status: <span id="shop-status-badge" style="margin-right: 1rem; color: var(--success); font-weight: bold;">Open</span>
+        Open: <span id="open-t">08:00</span> - Close: <span id="close-t">22:00</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="index.html" style="color: var(--primary)">Home</a>
+      </nav>
+    </header>
+
+    <div class="dashboard-grid">
+      <!-- Price List -->
+      <div class="glass-card">
+        <h2 style="margin-bottom: 1rem;">Pricing</h2>
+        <ul class="resource-list" id="price-list">
+          <!-- Filled by JS -->
+        </ul>
+      </div>
+
+      <!-- Resource Availability -->
+      <div class="glass-card">
+        <h2 style="margin-bottom: 1rem;">Resource Availability</h2>
+        <ul class="resource-list" id="resource-list">
+          <!-- Filled by JS -->
+        </ul>
+      </div>
+
+      <!-- Online Booking form -->
+      <div class="glass-card">
+        <h2 style="margin-bottom: 1rem;">Book a Session</h2>
+        <form id="booking-form">
+          <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 150px;">
+              <label>Your Name</label>
+              <input type="text" id="cust-name" required placeholder="John Doe">
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+              <label>Contact Number</label>
+              <input type="tel" id="cust-phone" required placeholder="771234567">
+            </div>
+          </div>
+          <div id="cust-booking-items-container">
+            <div class="cust-booking-item" style="border: 1px solid rgba(255,255,255,0.1); padding: 1rem; margin-bottom: 1rem; border-radius: 8px;">
+              <div class="form-group">
+                <label>Select Resource</label>
+                <select class="cust-resource" required>
+                  <!-- Filled by JS -->
+                </select>
+              </div>
+              <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 150px;">
+                  <label>In Date</label>
+                  <input type="date" class="cust-in-date">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                  <label>In Time</label>
+                  <input type="time" class="cust-start">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                  <label>Out Date</label>
+                  <input type="date" class="cust-out-date">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                  <label>Out Time</label>
+                  <input type="time" class="cust-end">
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="cust-add-resource-btn" class="btn" style="background: transparent; border: 1px solid var(--primary); color: var(--text-main); margin-bottom: 1rem; width: 100%;">+ Add Another Booking</button>
+          
+          <button type="submit" class="btn" style="width: 100%;">Request Booking(s)</button>
+        </form>
+        <p id="booking-msg" style="margin-top: 1rem; color: var(--success); display: none;">Booking created successfully!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script src="shared.js"></script>
+  <script src="portal.js"></script>
+
+  <!-- Secret Admin Link (Bottom Right Corner) -->
+  <a href="admin.html" style="position: fixed; bottom: 0; right: 0; width: 50px; height: 50px; opacity: 0; z-index: 9999;" title="Admin"></a>
+</body>
+</html>
